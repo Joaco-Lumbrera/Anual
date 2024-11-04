@@ -44,6 +44,7 @@ void altaNuevoPaciente(FILE * &Pacientes);
 void altaNuevoMedico(FILE * &Medicos);
 void actualizacionTurnos(nodo2 *&lista, FILE* Medicos );
 void atencionesEfectivas(nodo2 *lista,FILE* Medicos);
+void altaNuevoTurno(FILE*,FILE*,nodo2*);
 
 //MAIN
 int main(){
@@ -242,6 +243,73 @@ void altaNuevoMedico(FILE * &Medicos){
     }        
 }
 
+void altaNuevoTurno(FILE* Pacientes, FILE* Medicos, nodo2* &listaTurnos){
+    nodo2* nuevoTurno = new nodo2();
+	nodo2* aux= listaTurnos;
+    paciente p;
+    medico m;
+    int ultimoID;
+    int turno=listaTurnos->info.infoSubTurno->info.idTurno;
+    Pacientes=fopen("PACIENTES.BIN","rb+");
+    Medicos=fopen("MEDICOS.BIN","rb+");
+    fseek(Pacientes,sizeof(paciente),SEEK_END);
+    fread(&p,sizeof(paciente),1,Pacientes);
+    ultimoID=p.idPac;
+    cout<<"Ingrese id Paciente: "<<endl;
+    cin>>nuevoTurno->info.infoSubTurno->info.idPac;
+    while(nuevoTurno->info.infoSubTurno->info.idPac>ultimoID||nuevoTurno->info.infoSubTurno->info.idPac<0){
+        cout<<"El id es invalido, ingrese otro"<<endl;
+        cin>>nuevo->info.infoSubTurno->info.idPac;
+    }
+    fseek(Medicos,sizeof(medico),SEEK_END);
+    fread(&m,sizeof(medico),1,Medico);
+    ulitmoID=m.idMed;
+    fseek(Medicos,0,SEEK_SET);
+    cout<<"Ingrese id Medico: "<<endl;
+    cin>>nuevoTurno->info.idMed;
+    while(nuevoTurno->info.idMed>ultimoID||nuevoTurno->info.idMed<0){
+        cout<<"El id es invalido, ingrese otro"<<endl;
+        cin>>nuevoTurno->info.idMed;
+    }
+    while(aux!=null){
+    	if(aux->info.idMed==nuevoTurno->info.idMed){
+    		while(aux->info.sublista!=null){
+    			if(aux->info.sublista->info.idPac==nuevoTurno->info.sublista->info.idPac){
+    				cout<<"Ya hay turno con este medico"<<endl;
+    				return;
+				}
+			}
+		}
+	}
+    while(fread(&m, sizeof(medico),1,Medicos)){
+        if(nuevoTurno->info.idMed==m.idMed){
+                cout<<"Ingrese hora, dia, mes: "<<endl;
+                cin>>nuevoTurno->info.infoSubTurno->info.hora[];
+                cin>>nuevoTurno->info.infoSubTurno->info.dia;
+                cin>>nuevoTurno->info.infoSubTurno->info.mes;
+        }
+    }
+    while(aux!=null){
+    	if(aux->info.idMed==nuevoTurno->info.idMed){
+    		while(aux->info.sublista!=null){
+    			if(aux->info.sublista->info.mes==nuevoTurno->info.sublista->info.mes){
+    				if(aux->info.sublista->info.dia==nuevoTurno->info.sublista->info.dia){
+    					if(aux->info.sublista->info.hora==nuevoTurno->info.sublista->info.hora){
+    						cout<<"Ya hay turno en este horario"<<endl;
+    						return;
+						}	
+					}
+				}
+			}
+		}
+	}
+	//como tomó el ultimo turno se incrementa en 1 para el nuevo turno
+    turno++;
+    nuevoTurno->info.infoSubTurno->info.idTurno=turno;
+    nuevoTurno->info.infoSubTurno->info.estatus="p";
+    listaTurnos->sgte=nuevoTurno;
+
+}
 
 
 //ACTUALIZACIONES
