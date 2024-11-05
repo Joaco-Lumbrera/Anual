@@ -44,6 +44,7 @@ void altaNuevoPaciente(FILE * &Pacientes);
 void altaNuevoMedico(FILE * &Medicos);
 void actualizacionTurnos(nodo2 *&lista, FILE* Medicos );
 void atencionesEfectivas(nodo2 *lista,FILE* Medicos);
+void turnosPendientes(nodo2*,int, int);
 
 //MAIN
 int main(){
@@ -377,3 +378,17 @@ void atencionesEfectivas(nodo2 *lista,FILE* Medicos){
     }
 }
 
+void turnosPendientes(nodo2* listaTurnos, int id, int m){
+	while(listaTurnos!=null){
+		if(listaTurnos->info.idMed==id){
+			while(listaTurnos->info.sublista!=null){
+				if(listaTurnos->info.sublista->info.mes==m&&listaTurnos->info.sublista->info.estatus=="p"){
+					cout<<listaTurnos->info.sublista->info.dia<<endl;
+					cout<<listaTurnos->info.sublista->info.hora<<endl;
+					cout<<listaTurnos->info.sublista->info.idPac<<endl;
+				}
+			}
+		}
+	}
+		
+}
